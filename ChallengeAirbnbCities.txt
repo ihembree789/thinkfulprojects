@@ -1,0 +1,66 @@
+1. What's the most expensive listing? What else can you tell me about the listing?
+Liberty Station Luxury Home is priced at $4900.   The listing can be booked for just one night.  It is in the Midtown District. 
+
+
+SELECT
+	*,
+	max(price)
+FROM
+	Listings
+
+
+
+
+2.  Mission Bay is the most popular neighborhood 
+WITH AVAIL
+AS(
+
+SELECT
+	listing_id,
+	count(*) amount
+		
+FROM
+        calendar
+WHERE
+	available='f'
+GROUP BY 1
+
+)
+
+SELECT
+     listings.Neighborhood,
+     sum(Avail.amount)
+	 
+     
+FROM 
+	listings
+
+JOIN avail
+ON listings.id = avail.listing_id
+GROUP BY 1
+ORDER BY 2 DESC
+
+3. What time of year is the cheapest time to go to your city? July after the 4th. 
+SELECT
+		DATE(date) date,
+		avg(price) price		
+FROM
+        calendar		
+GROUP BY 1
+ORDER BY 2 
+LIMIT 20
+
+What about the busiest? July
+
+SELECT	
+		DATE(date) date,
+		Count(*) busy	
+FROM
+        calendar
+where 
+		available = 'f'
+GROUP BY 1
+ORDER by busy desc
+
+
+
